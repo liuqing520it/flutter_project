@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_project/share/theme.dart';
+import 'utils/share/theme.dart';
 import '/src/main/main/home_page.dart';
 import '/src/profile/mine/profile.dart';
 import '/src/workbranch/workbranch/workbranch.dart';
-import 'share/lq_colors.dart';
-import 'routes/routes.dart';
+import 'utils/share/lq_colors.dart';
+import 'utils/routes/routes.dart';
 
 class App extends StatelessWidget {
   const App({Key? key}) : super(key: key);

@@ -1,7 +1,9 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import '/utils/networking/networking.dart';
+import '../../../utils/share/lq_colors.dart';
 import '/src/unknown/unknown_screen.dart';
-import '../../../share/lq_colors.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -32,11 +34,19 @@ class HomePage extends StatelessWidget {
             style: TextStyle(color: LQColors.red, fontSize: 50),
           ),
           ElevatedButton(
-              onPressed: () {
-                Navigator.of(context).pushNamed(LQUnknownScreen.routeName);
+              onPressed: () => {
+                _onPressSend(context)
               },
               child: const Text(
-                '点击跳转',
+                '发送验证码',
+                style: TextStyle(color: Colors.red, fontSize: 30),
+              )),
+          ElevatedButton(
+              onPressed: () => {
+                _onPressPush(context)
+              },
+              child: const Text(
+                '验证码登录',
                 style: TextStyle(color: Colors.red, fontSize: 30),
               )),
         ],
@@ -44,5 +54,25 @@ class HomePage extends StatelessWidget {
     );
   }
 
-  void _onPressPush() {}
+  void _onPressSend(BuildContext context){
+    String uri = '/ml/user/sendMessages';
+    Map<String, dynamic> params = {"countryCode": '86',"phone": "15210255865", "templateId":3};
+    LQNetworking.postUri(uri, params: params).then((value) =>
+    {
+    }).catchError((e){
+    });
+  }
+
+  void _onPressPush(BuildContext context) {
+    // Navigator.of(context).pushNamed(LQUnknownScreen.routeName);
+    // var seqId = NetworkingConfig.configSequenceId();
+    // var temp = NetworkingConfig.configCheckSum(seqId);
+    String uri = '/ml/user/login/phone';
+    Map<String, dynamic> params = {"verificationCode": '8888',"phone": "15210255865"};
+    LQNetworking.postUri(uri, params: params).then((value) =>
+    {
+    }).catchError((e){
+    });
+
+  }
 }

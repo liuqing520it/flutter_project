@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_project/share/lq_colors.dart';
+
+import '../../../utils/share/lq_colors.dart';
 
 class Profile extends StatelessWidget {
   const Profile({Key? key}) : super(key: key);

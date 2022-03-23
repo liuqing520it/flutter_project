@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_project/share/lq_colors.dart';
+import '/utils/share/lq_colors.dart';
 
 class AppTheme {
   ///主要主题
@@ -21,6 +21,8 @@ class AppTheme {
         // height: 34, ///按钮高度
         textTheme: ButtonTextTheme.primary, //按钮文字样式
       ),
+      ///应用程序 所有脚手架下背景色
+      canvasColor: LQColors.gray[200],
       ///文字字体
       // fontFamily:
       ///字体主题，包括标题、body等文字样式

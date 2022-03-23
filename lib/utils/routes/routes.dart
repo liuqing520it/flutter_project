@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import '../src/login/login_screen.dart';
-import '../src/unknown/unknown_screen.dart';
+import '/src/login/login_screen.dart';
+import '/src/unknown/unknown_screen.dart';
 
 class Routes {
   static final Map<String, WidgetBuilder> routes = {
