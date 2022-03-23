@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_project/utils/colors/lq_colors.dart';
+import 'package:flutter_project/share/lq_colors.dart';
 
 class Workbranch extends StatelessWidget {
   const Workbranch({Key? key}) : super(key: key);

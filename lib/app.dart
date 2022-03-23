@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_project/src/main/main/home_page.dart';
-import 'package:flutter_project/src/profile/mine/profile.dart';
-import 'package:flutter_project/src/workbranch/workbranch/workbranch.dart';
-import 'package:flutter_project/utils/colors/lq_colors.dart';
+import 'package:flutter_project/share/theme.dart';
+import '/src/main/main/home_page.dart';
+import '/src/profile/mine/profile.dart';
+import '/src/workbranch/workbranch/workbranch.dart';
+import 'share/lq_colors.dart';
+import 'routes/routes.dart';
 
 class App extends StatelessWidget {
   const App({Key? key}) : super(key: key);
@@ -10,14 +12,19 @@ class App extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'LQ',
-      theme: ThemeData(primarySwatch: LQColors.theme),
+      title: 'Flutter',///只针对安卓 在多任务切换的时候App所展示的标题
+      theme: AppTheme.appNormalTheme,
+      darkTheme: AppTheme.appDarkTheme,
+      routes: Routes.routes,
+      // onGenerateRoute:
+      // initialRoute: ,
+      onUnknownRoute: Routes.unknownRoute,
       home: const AppMain(),
     );
   }
 }
 
-///**
+///
 ///* tab bar 配置
 class AppMain extends StatefulWidget {
   const AppMain({Key? key}) : super(key: key);
@@ -43,7 +50,6 @@ class _AppMainState extends State<AppMain> {
         selectedLabelStyle: const TextStyle(color: LQColors.theme, fontSize: 14),///选中文字样式
         unselectedLabelStyle:const TextStyle(color: LQColors.text, fontSize: 14),///未选中文字样式
         currentIndex: _selectedIndex,///记录当前位置
-
         onTap: (index) {///点击事件
           setState(() {
             _selectedIndex = index;
