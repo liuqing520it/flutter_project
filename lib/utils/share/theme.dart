@@ -27,9 +27,9 @@ class AppTheme {
       // fontFamily:
       ///字体主题，包括标题、body等文字样式
       textTheme: const TextTheme(
-        titleSmall: TextStyle(fontSize: 12, color: Color(0xFF333333)),
-        titleMedium: TextStyle(fontSize: 15, color: Color(0xFF333333)),
-        titleLarge: TextStyle(fontSize: 18, color: Color(0xFF333333)),
+        // displaySmall: TextStyle(fontSize: 12, color: Color(0xFF333333)),
+        // displayMedium: TextStyle(fontSize: 15, color: Color(0xFF333333)),
+        // displayLarge: TextStyle(fontSize: 18, color: Color(0xFF333333)),
       ));
 
   ///暗黑主题

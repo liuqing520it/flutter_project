@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
-import 'utils/share/theme.dart';
+import 'package:provider/provider.dart';
+import '../src/login/login_screen.dart';
+import '../utils/share/theme.dart';
 import '/src/main/main/home_page.dart';
 import '/src/profile/mine/profile.dart';
 import '/src/workbranch/workbranch/workbranch.dart';
-import 'utils/share/lq_colors.dart';
-import 'utils/routes/routes.dart';
+import '../utils/share/lq_colors.dart';
+import '../utils/routes/routes.dart';
+import 'app_view_data.dart';
 
 class App extends StatelessWidget {
   const App({Key? key}) : super(key: key);
@@ -12,14 +15,23 @@ class App extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter',///只针对安卓 在多任务切换的时候App所展示的标题
+      title: 'Flutter ML',
+      ///只针对安卓 在多任务切换的时候App所展示的标题
       theme: AppTheme.appNormalTheme,
       darkTheme: AppTheme.appDarkTheme,
       routes: Routes.routes,
       // onGenerateRoute:
       // initialRoute: ,
-      onUnknownRoute: Routes.unknownRoute,
-      home: const AppMain(),
+      // onUnknownRoute: Routes.unknownRoute,
+      home: Consumer(
+        builder: (BuildContext ctx, AppViewData value, Widget? child) {
+          if (value.token != null) {
+            return const AppMain();
+          } else {
+            return const LoginScreen();
+          }
+        },
+      ),
     );
   }
 }

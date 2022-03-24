@@ -1,0 +1,6 @@
+
+class LoginApi {
+  static sendCode(){
+
+  }
+}
