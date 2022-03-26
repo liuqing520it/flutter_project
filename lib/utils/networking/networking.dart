@@ -22,18 +22,56 @@ class LQNetworking {
   /// uri 请求地址
   /// params 请求参数
   /// interceptor 拦截器
-  static Future<T> postUri<T>(
+  static postUrl(
     String uri, {
     Map<String, dynamic>? params,
     Interceptor? interceptor,
-  }) async {
-    return _request(uri, method: 'post', params: params);
+    Function? onSuccess,
+    Function? onError,
+  }) {
+    Future future = _request(uri, method: 'post', params: params);
+    future.then((res) {
+      dynamic response = res.data;
+      final stateCode = response["code"];
+      final success = response["success"];
+      final message = response["message"];
+      if (res.statusCode == 200) {
+        ///正常状态码
+        if (stateCode == 10000) {
+          if (onSuccess != null) {
+            onSuccess(response);
+          }
+        } else if (stateCode == 10010 || stateCode == 10008) {
+          ///需要用户重新登录  异地登录/token过期
+          ///清除本地token
+          // UserHelper.getInstance().configCurrentUserLogout();
+          // ///发送全局通知
+          // DeviceEventEmitter.emit(userNeedLoginNotificationName(), response.data);
+        } else {
+
+          if (success == false) {
+            if (onError != null) {
+              onError(message);
+            }
+          }
+        }
+      } else {
+        ///异常状态码
+        if (onError != null) {
+          onError(message);
+        }
+      }
+    }).catchError((error) {
+      if(onError != null){
+        onError(error.toString());
+      }
+    });
   }
 
   ///请求类封装
   /// uri 请求地址
   /// method 请求方法 post/get/ put/ delete
-  static Future<T> _request<T>(
+  static Future<dynamic> _request(
     String uri, {
     String method = 'post',
     Map<String, dynamic>? params,
@@ -87,10 +125,18 @@ class LQNetworking {
     ) {
       // 如果你想终止请求并触发一个错误,你可以 reject 一个`DioError`对象,如`handler.reject(error)`，
       // 这样请求将被中止并触发异常，上层catchError会被调用。
-      if (kDebugMode && response.statusCode == 200) {
+      if (kDebugMode) {
         // printJson(response.data.toString());
         log(response.data.toString());
       }
+      // Map<String, dynamic> requestData = response.data;
+      // if (requestData["code"] != 200) {
+      //   String message = requestData["message"];
+      //   return handler.reject(DioError(
+      //       requestOptions:
+      //           RequestOptions(data: message, path: Configuration.baseUrl),
+      //       type: DioErrorType.cancel));
+      // }
       return handler.next(response);
     }, onError: (DioError e, ErrorInterceptorHandler handler) {
       // 如果你想完成请求并返回一些自定义数据，可以resolve 一个`Response`,如`handler.resolve(response)`。
@@ -108,7 +154,7 @@ class LQNetworking {
     try {
       Response response =
           await _dio.request(uri, queryParameters: params, options: options);
-      return response.data;
+      return response;
     } on DioError catch (e) {
       return Future.error(e);
     }

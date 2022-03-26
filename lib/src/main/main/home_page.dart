@@ -55,24 +55,11 @@ class HomePage extends StatelessWidget {
   }
 
   void _onPressSend(BuildContext context){
-    String uri = '/ml/user/sendMessages';
-    Map<String, dynamic> params = {"countryCode": '86',"phone": "15210255865", "templateId":3};
-    LQNetworking.postUri(uri, params: params).then((value) =>
-    {
-    }).catchError((e){
-    });
+
   }
 
   void _onPressPush(BuildContext context) {
-    // Navigator.of(context).pushNamed(LQUnknownScreen.routeName);
-    // var seqId = NetworkingConfig.configSequenceId();
-    // var temp = NetworkingConfig.configCheckSum(seqId);
-    String uri = '/ml/user/login/phone';
-    Map<String, dynamic> params = {"verificationCode": '8888',"phone": "15210255865"};
-    LQNetworking.postUri(uri, params: params).then((value) =>
-    {
-    }).catchError((e){
-    });
+
 
   }
 }

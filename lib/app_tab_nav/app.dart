@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../src/login/login_screen.dart';
 import '../utils/share/theme.dart';
+import '../utils/widget/hud/progress_hud.dart';
 import '/src/main/main/home_page.dart';
 import '/src/profile/mine/profile.dart';
 import '/src/workbranch/workbranch/workbranch.dart';
@@ -23,6 +24,8 @@ class App extends StatelessWidget {
       // onGenerateRoute:
       // initialRoute: ,
       // onUnknownRoute: Routes.unknownRoute,
+      navigatorObservers: [LQProgressHud.observer],
+      builder: LQProgressHud.initProgress(),
       home: Consumer(
         builder: (BuildContext ctx, AppViewData value, Widget? child) {
           if (value.token != null) {

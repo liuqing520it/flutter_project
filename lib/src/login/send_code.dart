@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_project/utils/extension/int_extension.dart';
+import '/utils/extension/int_extension.dart';
 
 import '../../utils/share/lq_colors.dart';
+import '../../utils/widget/hud/progress_hud.dart';
+import 'api/login_api.dart';
+import 'code_login.dart';
 
 class SendCodeScreen extends StatefulWidget {
   static String routeName = '/SendCodeScreen';
@@ -122,9 +125,7 @@ class _SendCodeScreenState extends State<SendCodeScreen> {
         Padding(
           padding: const EdgeInsets.only(left: 30, right: 30),
           child: ElevatedButton(
-              onPressed: () {
-                ///发送验证码点击
-              },
+              onPressed: () => _sendCodeAction(),
               style: ButtonStyle(
                 fixedSize:
                     MaterialStateProperty.all(const Size(double.maxFinite, 44)),
@@ -138,4 +139,18 @@ class _SendCodeScreenState extends State<SendCodeScreen> {
       ],
     );
   }
+
+  ///发送验证码
+  _sendCodeAction(){
+    String phone = _userNameController.text;
+    Map<String, dynamic> params = {"countryCode": '86',"phone": phone, "templateId":3};
+    LQProgressHud.showLoading();
+    LoginApi.sendCode(params, (res){
+      LQProgressHud.showMessage(res["message"]);
+      Navigator.of(context).pushNamed(CodeLoginScreen.routeName, arguments: phone);
+    }, (error){
+      LQProgressHud.showMessage(error);
+    });
+  }
+
 }

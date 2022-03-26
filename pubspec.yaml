@@ -39,6 +39,7 @@ dependencies:
   crypto: ^3.0.1
   webview_flutter: ^3.0.1
   pin_code_fields: ^7.3.0
+  flutter_smart_dialog: ^3.4.0+2
 
 dev_dependencies:
   flutter_test:

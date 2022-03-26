@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../src/login/code_login.dart';
 import '/src/login/send_code.dart';
 import '/src/webview/LQWebView.dart';
 import '/src/login/login_screen.dart';
@@ -8,6 +9,7 @@ class Routes {
   static final Map<String, WidgetBuilder> routes = {
     LoginScreen.routeName : (BuildContext context)=> const LoginScreen(),
     SendCodeScreen.routeName : (ctx) => const SendCodeScreen(),
+    CodeLoginScreen.routeName : (ctx) => const CodeLoginScreen(),
     LQWebView.routeName : (ctx) => const LQWebView(),
     LQUnknownScreen.routeName : (BuildContext context) => const LQUnknownScreen(),
   } ;
