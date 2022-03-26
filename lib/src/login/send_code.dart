@@ -5,6 +5,9 @@ import '../../utils/share/lq_colors.dart';
 import '../../utils/widget/hud/progress_hud.dart';
 import 'api/login_api.dart';
 import 'code_login.dart';
+import 'package:provider/provider.dart';
+
+import '../../app_tab_nav/app_view_data.dart';
 
 class SendCodeScreen extends StatefulWidget {
   static String routeName = '/SendCodeScreen';
@@ -25,7 +28,6 @@ class _SendCodeScreenState extends State<SendCodeScreen> {
         body: Stack(
           // fit: StackFit.loose,
           children: [
-
             Positioned(
               child: Image.asset(
                 'assets/images/login/img_bj.png',
@@ -141,16 +143,21 @@ class _SendCodeScreenState extends State<SendCodeScreen> {
   }
 
   ///发送验证码
-  _sendCodeAction(){
+  _sendCodeAction() {
     String phone = _userNameController.text;
-    Map<String, dynamic> params = {"countryCode": '86',"phone": phone, "templateId":3};
-    LQProgressHud.showLoading();
-    LoginApi.sendCode(params, (res){
-      LQProgressHud.showMessage(res["message"]);
-      Navigator.of(context).pushNamed(CodeLoginScreen.routeName, arguments: phone);
-    }, (error){
-      LQProgressHud.showMessage(error);
+    Map<String, dynamic> params = {
+      "countryCode": '86',
+      "phone": phone,
+      "templateId": 3
+    };
+    LQProgressHud.show();
+    LoginApi.sendCode(params, (res) {
+      LQProgressHud.showSuccess(res["message"]).then((value) => {
+            Navigator.of(context)
+                .pushNamed(CodeLoginScreen.routeName, arguments: phone)
+          });
+    }, (error) {
+      LQProgressHud.showError(error);
     });
   }
-
 }

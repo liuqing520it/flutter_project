@@ -31,6 +31,10 @@ class LQNetworking {
   }) {
     Future future = _request(uri, method: 'post', params: params);
     future.then((res) {
+      if (kDebugMode) {
+        // printJson(response.data.toString());
+        // log(res.data.toString());
+      }
       dynamic response = res.data;
       final stateCode = response["code"];
       final success = response["success"];
@@ -125,10 +129,6 @@ class LQNetworking {
     ) {
       // 如果你想终止请求并触发一个错误,你可以 reject 一个`DioError`对象,如`handler.reject(error)`，
       // 这样请求将被中止并触发异常，上层catchError会被调用。
-      if (kDebugMode) {
-        // printJson(response.data.toString());
-        log(response.data.toString());
-      }
       // Map<String, dynamic> requestData = response.data;
       // if (requestData["code"] != 200) {
       //   String message = requestData["message"];

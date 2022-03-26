@@ -1,12 +1,13 @@
 import 'dart:async';
-
 import 'package:flutter/material.dart';
-import 'package:flutter_project/utils/extension/int_extension.dart';
+import 'package:flutter_project/src/login/api/login_api.dart';
+import 'package:flutter_project/utils/widget/hud/progress_hud.dart';
+import '../../app_tab_nav/app.dart';
+import '/utils/extension/int_extension.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
-
 import '../../utils/share/lq_colors.dart';
-class CodeLoginScreen extends StatefulWidget {
 
+class CodeLoginScreen extends StatefulWidget {
   static String routeName = 'CodeLoginScreen';
 
   const CodeLoginScreen({Key? key}) : super(key: key);
@@ -17,15 +18,17 @@ class CodeLoginScreen extends StatefulWidget {
 
 class _CodeLoginScreenState extends State<CodeLoginScreen> {
   final _textEditingController = TextEditingController();
-  final StreamController<ErrorAnimationType> _errorController = StreamController<ErrorAnimationType>();
 
+  final StreamController<ErrorAnimationType> _errorController =
+      StreamController<ErrorAnimationType>();
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
         backgroundColor: Colors.white,
         body: Stack(
           // fit: StackFit.loose,
           children: [
-
             Positioned(
               child: Image.asset(
                 'assets/images/login/img_bj.png',
@@ -91,7 +94,7 @@ class _CodeLoginScreenState extends State<CodeLoginScreen> {
         pinTheme: PinTheme(
           shape: PinCodeFieldShape.box,
           borderRadius: BorderRadius.circular(5),
-          inactiveFillColor:Colors.white,
+          inactiveFillColor: Colors.white,
           activeFillColor: Colors.white,
           selectedFillColor: Colors.white,
           fieldHeight: 60,
@@ -104,17 +107,30 @@ class _CodeLoginScreenState extends State<CodeLoginScreen> {
         controller: _textEditingController,
         onCompleted: (v) {
           print("Completed");
+          _userLoginAction(v);
         },
         beforeTextPaste: (text) {
           //if you return true then it will show the paste confirmation dialog. Otherwise if false, then nothing will happen.
           //but you can show anything you want here, like your pop up saying wrong paste format or etc
           return true;
-        }, appContext: context,
-        onChanged: (String value) {
-
         },
+        appContext: context,
+        onChanged: (String value) {},
       ),
     );
   }
-}
 
+  _userLoginAction(String code) {
+    String phone = ModalRoute.of(context)?.settings.arguments as String;
+    Map<String, dynamic> params = {"verificationCode": code, "phone": phone};
+    LQProgressHud.show(title:'登陆中...');
+    LoginApi.codeLogin(params,
+            (userModel) => {
+                LQProgressHud.showSuccess('登陆成功').then((value) => {
+                 ///切换导航 到首页
+                Navigator.pushNamedAndRemoveUntil(context, AppMain.routeName, ModalRoute.withName(AppMain.routeName))})},
+            (error) {
+                LQProgressHud.showError(error);
+        });
+  }
+}

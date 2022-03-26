@@ -4,10 +4,16 @@ import 'package:flutter/services.dart';
 import '/utils/networking/networking.dart';
 import '../../../utils/share/lq_colors.dart';
 import '/src/unknown/unknown_screen.dart';
-
-class HomePage extends StatelessWidget {
+import '../../../app_tab_nav/app_view_data.dart';
+import 'package:provider/provider.dart';
+class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
 
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -35,7 +41,7 @@ class HomePage extends StatelessWidget {
           ),
           ElevatedButton(
               onPressed: () => {
-                _onPressSend(context)
+                _onPressSend()
               },
               child: const Text(
                 '发送验证码',
@@ -54,8 +60,8 @@ class HomePage extends StatelessWidget {
     );
   }
 
-  void _onPressSend(BuildContext context){
-
+  void _onPressSend(){
+    Provider.of<AppViewData>(context, listen: false).updateUserToken(null);
   }
 
   void _onPressPush(BuildContext context) {

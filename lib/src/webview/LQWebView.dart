@@ -1,4 +1,3 @@
-import 'dart:developer';
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_project/utils/extension/int_extension.dart';
@@ -19,7 +18,6 @@ class _LQWebViewState extends State<LQWebView> {
   double _progress = 0;
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     if (Platform.isAndroid) WebView.platform = AndroidWebView();
   }

@@ -1,37 +1,52 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 
-class LQProgressHud{
-  ///一些初始化配置
-  static TransitionBuilder initProgress(){
-    SmartDialog.config
-      ..alignment = Alignment.center
-      ..isPenetrate = false
-      ..clickBgDismiss = false
-      ..maskColor = Colors.black.withOpacity(0.35)
-      ..maskWidget = null
-      ..animationDuration = const Duration(milliseconds: 250)
-      ..isUseAnimation = true
-      ..isLoading = true
-      ..debounce = false
-      ..debounceTime = const Duration(milliseconds: 300);
-    return FlutterSmartDialog.init();
+class LQProgressHud {
+  static TransitionBuilder initProgress() {
+    EasyLoading.instance
+      ..maskType = EasyLoadingMaskType.clear
+      ..dismissOnTap = false
+      ..userInteractions = false
+      ..radius = 12.0
+      ..indicatorColor = Colors.white
+      ..loadingStyle = EasyLoadingStyle.custom
+      ..backgroundColor = Colors.black.withOpacity(0.5)
+      ..maskColor = Colors.blue.withOpacity(0.5)
+      ..textColor = Colors.white
+      ..displayDuration = const Duration(milliseconds: 1000)
+      ..animationDuration = const Duration(milliseconds: 300);
+    return EasyLoading.init();
   }
-  static final observer = FlutterSmartDialog.observer;
-
 
   ///loading
-  static Future<void> showLoading({String? title}){
-    return SmartDialog.showLoading(msg: title??'加载中...');
-  }
-  ///toast
-  static Future<void> showMessage(String message){
-    dismiss();
-    return SmartDialog.showToast(message, consumeEvent: true, type: SmartToastType.first);
+  static Future<void> show({String? title}) {
+    return EasyLoading.show(status: title ?? 'loading...');
   }
 
-  static dismiss(){
-    SmartDialog.dismiss();
+  ///提示信息
+  static Future<void> showInfo(String message) {
+    return EasyLoading.showInfo(message);
+  }
+
+  ///成功信息
+  static Future<void> showSuccess(String success) {
+    return EasyLoading.showSuccess(success);
+  }
+  ///失败信息
+  static Future<void> showError(String error) {
+    return EasyLoading.showError(error);
+  }
+  ///吐司
+  static Future<void> showToast(String toast){
+    return EasyLoading.showToast(toast);
+  }
+  ///show进度信息
+  static Future<void> showProgress(double progress, {String? message}){
+    return EasyLoading.showProgress(progress, status:message);
+  }
+
+  static dismiss() {
+    EasyLoading.dismiss();
   }
 
 

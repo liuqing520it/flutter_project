@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_project/app_tab_nav/loading.dart';
 import 'package:provider/provider.dart';
 import '../src/login/login_screen.dart';
 import '../utils/share/theme.dart';
@@ -15,6 +16,7 @@ class App extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // String? token = Provider.of<AppViewData>(context).token;
     return MaterialApp(
       title: 'Flutter ML',
       ///只针对安卓 在多任务切换的时候App所展示的标题
@@ -22,19 +24,18 @@ class App extends StatelessWidget {
       darkTheme: AppTheme.appDarkTheme,
       routes: Routes.routes,
       // onGenerateRoute:
-      // initialRoute: ,
-      // onUnknownRoute: Routes.unknownRoute,
-      navigatorObservers: [LQProgressHud.observer],
+      initialRoute: LoadingScreen.routeName,
+      onUnknownRoute: Routes.unknownRoute,
       builder: LQProgressHud.initProgress(),
-      home: Consumer(
-        builder: (BuildContext ctx, AppViewData value, Widget? child) {
-          if (value.token != null) {
-            return const AppMain();
-          } else {
-            return const LoginScreen();
-          }
-        },
-      ),
+      // home: Consumer(
+      //   builder: (BuildContext ctx, AppViewData value, Widget? child) {
+      //     if (value.token != null) {
+      //       return const AppMain();
+      //     } else {
+      //       return const LoginScreen();
+      //     }
+      //   },
+      // ),
     );
   }
 }
@@ -42,6 +43,7 @@ class App extends StatelessWidget {
 ///
 ///* tab bar 配置
 class AppMain extends StatefulWidget {
+  static String routeName = 'AppMain';
   const AppMain({Key? key}) : super(key: key);
 
   @override

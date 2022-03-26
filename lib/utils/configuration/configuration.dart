@@ -10,4 +10,5 @@ class Configuration{
   ///请求校验auth key 请求必传
   static const String signAuthKey = "MLQ1liz4Hn3LrTmmPdFE0DuOG9zhzSBnE3EggzD7";
 
+  static const String saveUserInfoKey = 'saveUserInfoKey_UserInfo';
 }

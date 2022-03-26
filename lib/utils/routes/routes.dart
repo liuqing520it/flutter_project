@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_project/app_tab_nav/loading.dart';
+import '../../app_tab_nav/app.dart';
 import '../../src/login/code_login.dart';
 import '/src/login/send_code.dart';
 import '/src/webview/LQWebView.dart';
@@ -7,11 +9,13 @@ import '/src/unknown/unknown_screen.dart';
 
 class Routes {
   static final Map<String, WidgetBuilder> routes = {
-    LoginScreen.routeName : (BuildContext context)=> const LoginScreen(),
+    LoadingScreen.routeName : (ctx)=>const LoadingScreen(),
+    LoginScreen.routeName : (ctx)=> const LoginScreen(),
     SendCodeScreen.routeName : (ctx) => const SendCodeScreen(),
     CodeLoginScreen.routeName : (ctx) => const CodeLoginScreen(),
     LQWebView.routeName : (ctx) => const LQWebView(),
-    LQUnknownScreen.routeName : (BuildContext context) => const LQUnknownScreen(),
+    AppMain.routeName: (ctx) => const AppMain(),
+    LQUnknownScreen.routeName : (ctx) => const LQUnknownScreen(),
   } ;
 
   ///这里可以 做用户授权等操作, 如果用户未登录 弹出登录页面

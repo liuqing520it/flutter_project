@@ -1,6 +1,5 @@
-
 class UserHelper {
-  User user = User();
+  UserSaveModel? user;
 
   UserHelper._internal();
 
@@ -9,10 +8,28 @@ class UserHelper {
   static late final UserHelper _instance = UserHelper._internal();
 }
 
-class User{
-  late final String userId;
-  late final String avatar;
-  late final String nickName;
-  late final String token;
-  // User({this.userId, this.nickName, this.avatar, this.token});
+class UserSaveModel {
+  int? userId;
+  String? avatar;
+  String? phone;
+  String? nickName;
+  String? token;
+
+  UserSaveModel({this.userId, this.phone, this.nickName, this.avatar, this.token});
+
+  UserSaveModel.fromJson(Map<String, dynamic> json) {
+    userId = json['userId'];
+    avatar = json['avatar'];
+    phone = json['phone'];
+    nickName = json['nickName'];
+    token = json['token'];
+  }
+
+  Map<String, dynamic> toJson() => <String, dynamic>{
+        'userId': userId,
+        'avatar': avatar,
+        'phone': phone,
+        'nickName': nickName,
+        'token': token,
+      };
 }

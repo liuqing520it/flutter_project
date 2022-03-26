@@ -14,7 +14,7 @@ class User{
   String? assetManageName;
   int? message;
   String? nickName;
-  int? phone;
+  String? phone;
   String? photo;
   int? userId;
   User({this.assetManageId, this.assetManageName, this.message, this.nickName, this.phone, this.photo, this.userId});
