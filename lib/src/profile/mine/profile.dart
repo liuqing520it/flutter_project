@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_project/src/profile/mine/api/profile_api.dart';
+import 'package:flutter_project/src/profile/user_setting/user_setting.dart';
 import 'package:flutter_project/utils/widget/hud/progress_hud.dart';
 import '../../../utils/share/lq_colors.dart';
 import '../../../utils/share/size_fit.dart';
@@ -39,6 +40,7 @@ class _ProfileState extends State<Profile> {
                 child: Column(
                   children: [
                     myCollectWidget(),
+                    const SizedBox(height: 5,),
                     profileListWidget(),
                   ],
                 ),
@@ -172,17 +174,24 @@ class _ProfileState extends State<Profile> {
     ];
 
     return Expanded(
-      child: ListView.builder(
+      child: ListView.separated(
         ///禁止滚动
         physics: const NeverScrollableScrollPhysics(),
         itemCount: dataSource.length,
-        itemExtent: 64,
         itemBuilder: (ctx, index) {
           ProfileModel itemModel = dataSource[index];
-          return Container(
-            decoration: BoxDecoration(borderRadius: BorderRadius.circular(5), color: Colors.white,),
-            padding: const EdgeInsets.only(left: 15, right: 15),
-            margin: const EdgeInsets.only(top: 8),
+          return TextButton(
+            style: ButtonStyle(
+                backgroundColor: MaterialStateProperty.all(Colors.white),
+                // splashFactory: NoSplash.splashFactory,
+                minimumSize: MaterialStateProperty.all(const Size.fromHeight(64)),
+                padding:MaterialStateProperty.all(const EdgeInsets.only(left: 10, right: 10)),
+            ),
+            onPressed: () {
+              if(itemModel.rowType == RowType.systemSetting){
+                Navigator.of(context).pushNamed(UserSettingScreen.routeName);
+              }
+            },
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -208,7 +217,9 @@ class _ProfileState extends State<Profile> {
               ],
             ),
           );
-        },
+        }, separatorBuilder: (BuildContext context, int index) {
+          return const SizedBox(height: 8,);
+      },
       ),
     );
   }

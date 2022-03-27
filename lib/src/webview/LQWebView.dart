@@ -27,11 +27,7 @@ class _LQWebViewState extends State<LQWebView> {
     Map<String, String>? arguments = ModalRoute.of(context)?.settings.arguments as Map<String,String>;
     return Scaffold(
       appBar: AppBar(
-        iconTheme: const IconThemeData(color: Colors.black),
-        backgroundColor: Colors.white,
         title: Text(arguments["title"]!, style: TextStyle(color: LQColors.text[800]),),
-
-        shadowColor: Colors.transparent,
       ),
       body: Column(
         children: [
