@@ -22,26 +22,19 @@ class _LoadingScreenState extends State<LoadingScreen> {
   @override
   void initState() {
     super.initState();
-    _loadUserInfo().then((value) => {
-      createRoute(value)
-    }).catchError((e){
-      LQProgressHud.showError(e);
-    });
+    _loadUserInfo();
   }
 
-  Future<SharedPreferences> _loadUserInfo() async {
+   _loadUserInfo() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    return prefs;
-  }
-
-  createRoute(SharedPreferences prefs) {
     final String? userJson = prefs.getString(Configuration.saveUserInfoKey);
     print(userJson);
     String _userToken = '';
     if (userJson != null) {
       ///从内存中获取到了用户信息
       UserSaveModel userSaveModel =
-          UserSaveModel.fromJson(json.decode(userJson));
+      UserSaveModel.fromJson(json.decode(userJson));
+      UserHelper().user = userSaveModel;
       _userToken = userSaveModel.token!;
     }
 
@@ -56,6 +49,6 @@ class _LoadingScreenState extends State<LoadingScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(body: Center(child: CircularProgressIndicator()));
+    return const Scaffold(body: Center(child: CircularProgressIndicator(strokeWidth: 5,color: Colors.black,)));
   }
 }

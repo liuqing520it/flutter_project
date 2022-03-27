@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter_project/utils/user_helper/user_helper.dart';
 import '/utils/networking/network_config.dart';
 import '../configuration/configuration.dart';
 import 'dart:developer';
@@ -95,10 +96,14 @@ class LQNetworking {
       log("\n请求参数: $params\n");
     }
 
+    String userToken = '';
+    if(UserHelper().user?.token != null){
+      userToken = UserHelper().user!.token!;
+    }
+
     ///请求头
     Map<String, dynamic> header = {
       "Content-Type": Headers.formUrlEncodedContentType,
-
       ///"application/x-www-form-urlencoded;charset=UTF-8",
       "Accept": Headers.jsonContentType,
       "seqID": seqID,
@@ -107,7 +112,7 @@ class LQNetworking {
       "Sign": NetworkingConfig.configSignString(timeStamp),
       "Timestamp": timeStamp.toString(),
       "iTag": NetworkingConfig.getITagString(),
-      "token": "",
+      "token": userToken,
     };
 
     if (kDebugMode) {

@@ -9,14 +9,12 @@ import '/src/profile/mine/profile.dart';
 import '/src/workbranch/workbranch/workbranch.dart';
 import '../utils/share/lq_colors.dart';
 import '../utils/routes/routes.dart';
-import 'app_view_data.dart';
 
 class App extends StatelessWidget {
   const App({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    // String? token = Provider.of<AppViewData>(context).token;
     return MaterialApp(
       title: 'Flutter ML',
       ///只针对安卓 在多任务切换的时候App所展示的标题
@@ -27,15 +25,6 @@ class App extends StatelessWidget {
       initialRoute: LoadingScreen.routeName,
       onUnknownRoute: Routes.unknownRoute,
       builder: LQProgressHud.initProgress(),
-      // home: Consumer(
-      //   builder: (BuildContext ctx, AppViewData value, Widget? child) {
-      //     if (value.token != null) {
-      //       return const AppMain();
-      //     } else {
-      //       return const LoginScreen();
-      //     }
-      //   },
-      // ),
     );
   }
 }
